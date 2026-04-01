@@ -2,15 +2,15 @@
 set -euo pipefail
 
 # ============================================================
-# AxonLab — Deploy a VPS Hostinger
-# Uso: bash deploy.sh
-#      bash deploy.sh --fresh   (reinstalación completa)
+# AxonLab — Deploy a VPS (misma VPS que florenciamaguirre.com
+# y velours.app — Node, Nginx y Certbot ya instalados)
+# Uso: bash deploy.sh          (actualización)
+#      bash deploy.sh --fresh  (primera vez: nginx + ssl)
 # ============================================================
 
 BRANCH="main"
 DOMAIN="axonlab.cloud"
 APP_DIR="/var/www/axonlab"
-NODE_VERSION="20"
 
 # --- Leer secrets ---
 SECRETS_FILE="$USERPROFILE/.claude/secrets/axonlab-vps.json"
@@ -30,7 +30,6 @@ read_secret() {
 VPS_USER=$(read_secret user)
 VPS_HOST=$(read_secret host)
 VPS_PORT=$(read_secret port)
-VPS_PASS=$(read_secret password)
 GH_TOKEN=$(read_secret gh_token)
 
 AUTH_REPO_URL="https://${GH_TOKEN}@github.com/AgustinAguilar/axonlab.git"
@@ -48,7 +47,7 @@ echo "=================================================="
 echo "  Dominio:    $DOMAIN"
 echo "  Directorio: $APP_DIR"
 echo "  Branch:     $BRANCH"
-echo "  Modo:       $([ "$FRESH" = true ] && echo 'INSTALACION COMPLETA' || echo 'ACTUALIZACION')"
+echo "  Modo:       $([ "$FRESH" = true ] && echo 'PRIMERA VEZ (nginx + ssl)' || echo 'ACTUALIZACION')"
 echo ""
 
 # ============================================================
@@ -61,7 +60,6 @@ AUTH_REPO_URL="$AUTH_REPO_URL"
 BRANCH="$BRANCH"
 APP_DIR="$APP_DIR"
 DOMAIN="$DOMAIN"
-NODE_VERSION="$NODE_VERSION"
 FRESH="$FRESH"
 
 GREEN='\033[0;32m'
@@ -75,38 +73,11 @@ warn() { echo -e "\${YELLOW}[!]\${NC} \$1"; }
 err()  { echo -e "\${RED}[✗]\${NC} \$1"; exit 1; }
 info() { echo -e "\${CYAN}[→]\${NC} \$1"; }
 
-# ──────────────────────────────────────────────
-# 1. Dependencias base (solo en fresh)
-# ──────────────────────────────────────────────
-if [ "\$FRESH" = "true" ]; then
-  info "Actualizando sistema..."
-  apt-get update -qq
-  apt-get install -y -qq curl git nginx certbot python3-certbot-nginx sshpass
-fi
+# Node, Nginx y Certbot ya están instalados en esta VPS.
+log "Node: \$(node -v) | Nginx: \$(nginx -v 2>&1 | grep -o '[0-9.]*' | head -1) | Certbot: \$(certbot --version 2>&1 | grep -o '[0-9.]*' | head -1)"
 
 # ──────────────────────────────────────────────
-# 2. Node.js
-# ──────────────────────────────────────────────
-install_node() {
-  if command -v node &>/dev/null; then
-    CURRENT=\$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
-    if [ "\$CURRENT" -ge "\$NODE_VERSION" ]; then
-      log "Node.js \$(node -v) ya instalado."
-      return
-    fi
-  fi
-  info "Instalando Node.js \${NODE_VERSION}.x..."
-  curl -fsSL "https://deb.nodesource.com/setup_\${NODE_VERSION}.x" | bash -
-  apt-get install -y -qq nodejs
-  log "Node.js \$(node -v) instalado."
-}
-
-if [ "\$FRESH" = "true" ]; then
-  install_node
-fi
-
-# ──────────────────────────────────────────────
-# 3. Clonar o actualizar repo
+# 1. Clonar o actualizar repo
 # ──────────────────────────────────────────────
 if [ ! -d "\$APP_DIR/.git" ]; then
   info "Primera vez — clonando repo..."
