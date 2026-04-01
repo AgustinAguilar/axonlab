@@ -1,0 +1,35 @@
+Ⅰ. Manual de Marca: AxonLab
+1. ADN de Marca
+Nombre: AxonLab
+
+Slogan: Donde la IA cobra impulso.
+
+Personalidad: Sofisticada, técnica pero accesible, minimalista y vanguardista.
+
+Propuesta de Valor: Transformar la lógica abstracta de la IA en ejecución tangible y automatizada.
+
+2. Identidad Visual (Sistema "Lógica Luminosa")
+Paleta de Colores:
+
+Base: Platino (#F5F5F7) - Fondo principal.
+
+Acento Primario: Cian Eléctrico (#00F2FE) - Para botones, luces y estados activos.
+
+Acento Secundario: Índigo Profundo (#4F46E5) - Para profundidad y jerarquía.
+
+Texto: Negro Grafito (#1D1D1F) - Elegancia y legibilidad.
+
+Tipografía:
+
+Headlines: Space Grotesk (Geométrica, futurista).
+
+Body: Inter (Limpia, moderna).
+
+Code/Data: JetBrains Mono (Toque de laboratorio).
+
+3. Elementos Gráficos
+El Impulso: Líneas de gradiente que nacen en gris y terminan en Cian Eléctrico.
+
+Glassmorphism: Uso de contenedores con desenfoque de fondo (backdrop-filter) para emular vidrio esmerilado.
+
+Nodos: Círculos perfectos con sutil brillo exterior (glow).
