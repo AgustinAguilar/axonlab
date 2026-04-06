@@ -233,7 +233,7 @@ const AGENTS = [
         {
           icon: CreditCard,
           title: 'Import de resúmenes PDF',
-          desc: 'Enviá el PDF de tu tarjeta BBVA o ICBC. En segundos, todas las transacciones del mes quedan importadas sin tipear nada.',
+          desc: 'Enviá el PDF de tu tarjetas de credito. En segundos, todas las transacciones del mes quedan importadas sin tipear nada.',
         },
         {
           icon: Layers,
