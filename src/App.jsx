@@ -4,7 +4,8 @@ import {
   Brain, Workflow, Globe, ArrowRight, Zap,
   ChevronRight, Menu, X, MessageCircle, Send, Sparkles,
   TrendingUp, Receipt, ShoppingBasket, Calendar, ShoppingCart,
-  Check, Puzzle,
+  Check, Puzzle, Mic, CreditCard, Layers, Bell, BarChart2,
+  DollarSign, FileText, Users,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -219,8 +220,61 @@ const AGENTS = [
     tag: 'Finanzas Personales',
     icon: TrendingUp,
     accent: '#4F46E5',
-    description: 'Registrá ingresos y gastos por WhatsApp. Categoriza automáticamente, te avisa cuando estás por pasarte del presupuesto y genera reportes mensuales.',
-    features: ['Registro por chat o voz', 'Alertas de presupuesto', 'Reportes automáticos'],
+    description: 'Registrá ingresos y gastos por chat o voz. Categoriza solo, importa resúmenes de tarjeta y te avisa antes de pasarte del presupuesto.',
+    features: ['Registro por voz o texto', 'Import PDF de tarjetas', 'Alertas de presupuesto', 'Proyección mensual'],
+    detail: {
+      tagline: 'Tu contador personal que entiende español rioplatense — sin planillas, sin apps complicadas, sin fricción.',
+      highlights: [
+        {
+          icon: Mic,
+          title: 'Voz o texto natural',
+          desc: 'Mandá un audio o escribí "gasté $500 en el super con débito" — el agente entiende, categoriza y registra solo. Sin formularios.',
+        },
+        {
+          icon: CreditCard,
+          title: 'Import de resúmenes PDF',
+          desc: 'Enviá el PDF de tu tarjeta BBVA o ICBC. En segundos, todas las transacciones del mes quedan importadas sin tipear nada.',
+        },
+        {
+          icon: Layers,
+          title: 'Cuotas inteligentes',
+          desc: 'Compraste en 12 cuotas? El agente desglosa cada cuota mes a mes, te avisa cuáles terminan pronto y cuánto debés por tarjeta.',
+        },
+        {
+          icon: Bell,
+          title: 'Alertas de presupuesto',
+          desc: 'Definís un límite mensual por categoría — comida, entretenimiento, ropa — y el agente te avisa cuando estás llegando al tope.',
+        },
+        {
+          icon: BarChart2,
+          title: 'Proyección y comparación',
+          desc: 'Calculá cuánto vas a gastar el mes que viene: gastos fijos + cuotas pendientes + promedio de los últimos 3 meses. Sin sorpresas.',
+        },
+        {
+          icon: DollarSign,
+          title: 'Ahorro en ARS y USD',
+          desc: 'Registrá ahorros en pesos o dólares con el tipo de cambio blue del momento. Jubilación, plazo fijo, cripto — todo organizado.',
+        },
+        {
+          icon: FileText,
+          title: 'Gastos fijos automáticos',
+          desc: 'Alquiler, luz, internet, Netflix — el agente conoce tus gastos recurrentes, los gestiona cada mes y te dice qué falta pagar.',
+        },
+        {
+          icon: Users,
+          title: 'Préstamos entre personas',
+          desc: 'Le prestaste plata a alguien? El agente lleva la cuenta en ARS y USD — quién te debe, a quién le debés, y los saldos al día.',
+        },
+      ],
+      chat: [
+        { from: 'user', text: '🎙 [audio 0:04]' },
+        { from: 'bot', text: '✓ Registrado\nSupermercado — $8.500\nMétodo: BBVA débito · Comida\n📊 Llevás $24.200 en comida (81% del presupuesto)' },
+        { from: 'user', text: '📄 Resumen_BBVA_Mayo.pdf' },
+        { from: 'bot', text: '✓ 23 transacciones importadas\n💳 3 nuevas cuotas detectadas\nTotal: $142.800' },
+        { from: 'user', text: '¿Cuánto voy a gastar en junio?' },
+        { from: 'bot', text: '📅 Proyección Junio\n• Fijos: $45.000\n• Cuotas: $18.600\n• Variable est.: $32.400\n─────────\nTotal ~$96.000' },
+      ],
+    },
   },
   {
     name: 'Axon Fiscal',
@@ -256,11 +310,12 @@ const AGENTS = [
   },
 ]
 
-const AgentCard = ({ name, tag, icon: Icon, accent, description, features, index }) => {
+const AgentCard = ({ name, tag, icon: Icon, accent, description, features, detail, index, onClick }) => {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-50px' })
   const cardRef = useRef(null)
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, sx: 50, sy: 50 })
+  const clickable = !!detail
 
   const handleMouseMove = useCallback((e) => {
     const rect = cardRef.current?.getBoundingClientRect()
@@ -280,9 +335,10 @@ const AgentCard = ({ name, tag, icon: Icon, accent, description, features, index
     >
       <div
         ref={cardRef}
-        className="tilt-card group relative rounded-2xl p-7 overflow-hidden h-full cursor-default"
+        className={`tilt-card group relative rounded-2xl p-7 overflow-hidden h-full ${clickable ? 'cursor-pointer' : 'cursor-default'}`}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onClick={clickable ? onClick : undefined}
         style={{
           background: 'rgba(255,255,255,0.48)',
           backdropFilter: 'blur(22px)',
@@ -315,7 +371,7 @@ const AgentCard = ({ name, tag, icon: Icon, accent, description, features, index
         <h3 className="font-grotesk font-semibold text-lg text-graphite mb-2">{name}</h3>
         <p className="font-inter text-sm leading-relaxed mb-5" style={{ color: '#6E6E73' }}>{description}</p>
 
-        <ul className="flex flex-col gap-1.5">
+        <ul className="flex flex-col gap-1.5 mb-5">
           {features.map(f => (
             <li key={f} className="flex items-center gap-2 font-inter text-xs" style={{ color: '#6E6E73' }}>
               <Check size={11} style={{ color: accent, flexShrink: 0 }} />
@@ -323,7 +379,153 @@ const AgentCard = ({ name, tag, icon: Icon, accent, description, features, index
             </li>
           ))}
         </ul>
+
+        {clickable && (
+          <div className="inline-flex items-center gap-1 font-mono text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ color: accent }}>
+            Ver detalle <ChevronRight size={12} />
+          </div>
+        )}
       </div>
+    </motion.div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Agent Detail Modal
+// ─────────────────────────────────────────────────────────────────────────────
+const AgentModal = ({ agent, onClose }) => {
+  const { name, tag, icon: Icon, accent, detail } = agent
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.22 }}
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0"
+        style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', background: 'rgba(245,245,247,0.72)' }}
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <motion.div
+        className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl flex flex-col"
+        initial={{ opacity: 0, y: 28, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 16, scale: 0.97 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+        style={{
+          background: 'rgba(255,255,255,0.94)',
+          backdropFilter: 'blur(40px)',
+          WebkitBackdropFilter: 'blur(40px)',
+          border: '1px solid rgba(255,255,255,0.96)',
+          boxShadow: '0 32px 100px rgba(79,70,229,0.18), 0 8px 32px rgba(0,0,0,0.06)',
+        }}
+      >
+        {/* Header */}
+        <div className="flex items-start justify-between p-7 pb-0 shrink-0">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+              style={{ background: `${accent}14`, border: `1px solid ${accent}2a` }}>
+              <Icon size={26} style={{ color: accent }} />
+            </div>
+            <div>
+              <span className="inline-block font-mono text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full mb-1"
+                style={{ background: `${accent}12`, color: accent, border: `1px solid ${accent}28` }}>
+                {tag}
+              </span>
+              <h3 className="font-grotesk font-bold text-2xl md:text-3xl text-graphite">{name}</h3>
+            </div>
+          </div>
+          <button onClick={onClose}
+            className="p-2 rounded-xl hover:bg-black/5 transition-colors shrink-0 ml-4 mt-1">
+            <X size={20} color="#6E6E73" />
+          </button>
+        </div>
+
+        <p className="font-inter text-base px-7 pt-3 pb-6 shrink-0" style={{ color: '#6E6E73', lineHeight: 1.78 }}>
+          {detail.tagline}
+        </p>
+
+        {/* Body */}
+        <div className="px-7 pb-0 grid md:grid-cols-[1fr_300px] gap-6 flex-1 min-h-0">
+          {/* Feature grid */}
+          <div className="grid sm:grid-cols-2 gap-3 content-start">
+            {detail.highlights.map(({ icon: HIcon, title, desc }) => (
+              <div key={title} className="p-4 rounded-2xl flex gap-3"
+                style={{ background: 'rgba(0,0,0,0.025)', border: '1px solid rgba(0,0,0,0.055)' }}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+                  style={{ background: `${accent}12` }}>
+                  <HIcon size={15} style={{ color: accent }} />
+                </div>
+                <div>
+                  <p className="font-grotesk font-semibold text-sm text-graphite mb-0.5">{title}</p>
+                  <p className="font-inter text-xs leading-relaxed" style={{ color: '#6E6E73' }}>{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Chat mockup */}
+          <div className="rounded-2xl overflow-hidden flex flex-col shrink-0"
+            style={{ background: 'rgba(0,0,0,0.025)', border: '1px solid rgba(0,0,0,0.055)', maxHeight: 420 }}>
+            <div className="flex items-center gap-2.5 px-4 py-3 shrink-0"
+              style={{ background: 'rgba(255,255,255,0.8)', borderBottom: '1px solid rgba(0,0,0,0.07)' }}>
+              <div className="w-7 h-7 rounded-xl flex items-center justify-center"
+                style={{ background: `linear-gradient(135deg, ${accent}, #00F2FE)` }}>
+                <Icon size={13} color="#fff" />
+              </div>
+              <div>
+                <p className="font-grotesk font-semibold text-xs text-graphite">{name}</p>
+                <p className="font-mono text-[9px]" style={{ color: '#00F2FE' }}>
+                  <span className="badge-dot inline-block w-1 h-1 rounded-full mr-1 align-middle" style={{ background: '#00F2FE' }} />
+                  activo
+                </p>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2.5">
+              {detail.chat.map((msg, i) => (
+                <motion.div key={i}
+                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.08 }}
+                  className={`flex ${msg.from === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className="max-w-[88%] px-3 py-2 font-inter text-xs leading-relaxed whitespace-pre-line"
+                    style={msg.from === 'user'
+                      ? { background: `linear-gradient(135deg, ${accent}, #00F2FE)`, color: '#fff', borderRadius: '12px 12px 3px 12px' }
+                      : { background: 'rgba(255,255,255,0.9)', color: '#1D1D1F', borderRadius: '12px 12px 12px 3px', border: '1px solid rgba(0,0,0,0.07)' }
+                    }
+                  >
+                    {msg.text}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-7 py-5 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0"
+          style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+          <p className="font-inter text-sm text-center sm:text-left" style={{ color: '#9393A0' }}>
+            Suscripción mensual · Desplegado y mantenido por AxonLab
+          </p>
+          <CyanButton href="mailto:hola@axonlab.cloud">
+            Quiero este agente <ArrowRight size={15} />
+          </CyanButton>
+        </div>
+      </motion.div>
     </motion.div>
   )
 }
@@ -331,6 +533,8 @@ const AgentCard = ({ name, tag, icon: Icon, accent, description, features, index
 const CatalogSection = () => {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const [openAgent, setOpenAgent] = useState(null)
+
   return (
     <section id="catalogo" ref={ref} className="py-28 px-6">
       <div className="max-w-6xl mx-auto">
@@ -346,9 +550,22 @@ const CatalogSection = () => {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {AGENTS.map((agent, i) => <AgentCard key={agent.name} {...agent} index={i} />)}
+          {AGENTS.map((agent, i) => (
+            <AgentCard
+              key={agent.name}
+              {...agent}
+              index={i}
+              onClick={agent.detail ? () => setOpenAgent(agent) : undefined}
+            />
+          ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {openAgent?.detail && (
+          <AgentModal agent={openAgent} onClose={() => setOpenAgent(null)} />
+        )}
+      </AnimatePresence>
     </section>
   )
 }
