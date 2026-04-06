@@ -3,6 +3,8 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import {
   Brain, Workflow, Globe, ArrowRight, Zap,
   ChevronRight, Menu, X, MessageCircle, Send, Sparkles,
+  TrendingUp, Receipt, ShoppingBasket, Calendar, ShoppingCart,
+  Check, Puzzle,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -133,9 +135,9 @@ const SectionLabel = ({ children, center = false }) => (
 // ServiceCard — 3D Tilt + specular highlight
 // ─────────────────────────────────────────────────────────────────────────────
 const SERVICES = [
-  { icon: Brain,    title: 'AI Agents',      description: 'Agentes inteligentes que piensan, deciden y actúan de forma autónoma para resolver tus procesos más complejos — sin intervención humana.' },
-  { icon: Workflow, title: 'n8n Workflows',   description: 'Automatización visual de procesos. Conectamos cada herramienta de tu stack con flujos de trabajo que operan de forma continua.' },
-  { icon: Globe,    title: 'Smart Webs',      description: 'Sitios que no solo informan: procesan consultas, responden en tiempo real y evolucionan integrando IA en cada interacción.' },
+  { icon: Brain,    title: 'Vos elegís',      description: 'Seleccionás el agente que necesitás del catálogo — o nos contás tu idea. Sin tecnicismos, sin reuniones interminables.' },
+  { icon: Workflow, title: 'Nosotros desplegamos', description: 'Configuramos, conectamos y lanzamos todo en la nube. Servidores, bases de datos, integraciones — eso es problema nuestro.' },
+  { icon: Globe,    title: 'Vos solo usás',   description: 'Por una suscripción mensual, tu agente opera 24/7. Actualizaciones, mantenimiento y soporte incluidos. Como Netflix, pero para tu negocio.' },
 ]
 
 const ServiceCard = ({ icon: Icon, title, description, index }) => {
@@ -205,6 +207,198 @@ const ServiceCard = ({ icon: Icon, title, description, index }) => {
         </div>
       </div>
     </motion.div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Catálogo de Agentes
+// ─────────────────────────────────────────────────────────────────────────────
+const AGENTS = [
+  {
+    name: 'Axon Finance',
+    tag: 'Finanzas Personales',
+    icon: TrendingUp,
+    accent: '#4F46E5',
+    description: 'Registrá ingresos y gastos por WhatsApp. Categoriza automáticamente, te avisa cuando estás por pasarte del presupuesto y genera reportes mensuales.',
+    features: ['Registro por chat o voz', 'Alertas de presupuesto', 'Reportes automáticos'],
+  },
+  {
+    name: 'Axon Fiscal',
+    tag: 'Facturación + ARCA',
+    icon: Receipt,
+    accent: '#00F2FE',
+    description: 'Todo lo de Finance más facturación electrónica automática ante ARCA. Ideal para autónomos y pequeños comercios que quieren cumplir sin perder tiempo.',
+    features: ['Facturación automática', 'Integración ARCA', 'Gestión de IVA y monotributo'],
+  },
+  {
+    name: 'Axon Pantry',
+    tag: 'Stock del Hogar',
+    icon: ShoppingBasket,
+    accent: '#4F46E5',
+    description: 'Controlá tu despensa con fotos o mensajes de voz. El agente detecta qué falta, genera la lista de compras y te recuerda antes de ir al super.',
+    features: ['Control por foto o voz', 'Lista de compras inteligente', 'Alertas de stock bajo'],
+  },
+  {
+    name: 'Axon Agenda',
+    tag: 'Turnos Inteligentes',
+    icon: Calendar,
+    accent: '#00F2FE',
+    description: 'Gestioná turnos y reservas desde WhatsApp o Telegram, con o sin Calendly. Confirmaciones, recordatorios y cancelaciones — completamente automáticas.',
+    features: ['Reservas por chat', 'Integración Calendly', 'Recordatorios automáticos'],
+  },
+  {
+    name: 'Axon Delivery',
+    tag: 'Ventas y Pedidos',
+    icon: ShoppingCart,
+    accent: '#4F46E5',
+    description: 'Bot de ventas para comercios. Recibe pedidos, consulta stock en tiempo real, calcula totales y coordina la entrega — sin que toques el teléfono.',
+    features: ['Toma de pedidos automática', 'Consulta de stock en vivo', 'Coordinación de entrega'],
+  },
+]
+
+const AgentCard = ({ name, tag, icon: Icon, accent, description, features, index }) => {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-50px' })
+  const cardRef = useRef(null)
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0, sx: 50, sy: 50 })
+
+  const handleMouseMove = useCallback((e) => {
+    const rect = cardRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const x = (e.clientX - rect.left) / rect.width
+    const y = (e.clientY - rect.top) / rect.height
+    setTilt({ rx: (y - 0.5) * 10, ry: (x - 0.5) * -10, sx: x * 100, sy: y * 100 })
+  }, [])
+
+  const handleMouseLeave = useCallback(() => setTilt({ rx: 0, ry: 0, sx: 50, sy: 50 }), [])
+
+  return (
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div
+        ref={cardRef}
+        className="tilt-card group relative rounded-2xl p-7 overflow-hidden h-full cursor-default"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          background: 'rgba(255,255,255,0.48)',
+          backdropFilter: 'blur(22px)',
+          WebkitBackdropFilter: 'blur(22px)',
+          border: '1px solid rgba(255,255,255,0.78)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.65)',
+          transform: `perspective(900px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+          transition: 'transform 0.12s ease, box-shadow 0.3s ease',
+        }}
+      >
+        {/* Specular */}
+        <div className="absolute inset-0 pointer-events-none rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ background: `radial-gradient(circle at ${tilt.sx}% ${tilt.sy}%, rgba(255,255,255,0.3) 0%, transparent 55%)` }} />
+        {/* Accent corner glow */}
+        <div className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ background: `radial-gradient(circle at 0% 0%, ${accent}12 0%, transparent 55%)` }} />
+
+        {/* Tag badge */}
+        <span className="inline-block font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full mb-5"
+          style={{ background: `${accent}12`, color: accent, border: `1px solid ${accent}28` }}>
+          {tag}
+        </span>
+
+        {/* Icon */}
+        <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+          style={{ background: `${accent}12`, border: `1px solid ${accent}22` }}>
+          <Icon size={20} style={{ color: accent }} />
+        </div>
+
+        <h3 className="font-grotesk font-semibold text-lg text-graphite mb-2">{name}</h3>
+        <p className="font-inter text-sm leading-relaxed mb-5" style={{ color: '#6E6E73' }}>{description}</p>
+
+        <ul className="flex flex-col gap-1.5">
+          {features.map(f => (
+            <li key={f} className="flex items-center gap-2 font-inter text-xs" style={{ color: '#6E6E73' }}>
+              <Check size={11} style={{ color: accent, flexShrink: 0 }} />
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  )
+}
+
+const CatalogSection = () => {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  return (
+    <section id="catalogo" ref={ref} className="py-28 px-6">
+      <div className="max-w-6xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.75 }}>
+          <SectionLabel>Catálogo</SectionLabel>
+          <h2 className="font-grotesk font-bold leading-tight mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
+            Agentes listos para
+            <br /><span style={{ color: '#4F46E5' }}>impulsar tu día</span>
+          </h2>
+          <p className="font-inter text-base mb-16 max-w-lg" style={{ color: '#6E6E73', lineHeight: 1.75 }}>
+            Soluciones pre-armadas y testeadas. Activá el que necesitás — en días está operando para vos.
+          </p>
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {AGENTS.map((agent, i) => <AgentCard key={agent.name} {...agent} index={i} />)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Sección A Medida
+// ─────────────────────────────────────────────────────────────────────────────
+const AMedidaSection = () => {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  return (
+    <section ref={ref} className="py-16 px-6">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="relative overflow-hidden rounded-3xl p-10 md:p-14 flex flex-col md:flex-row items-center gap-8 md:gap-14"
+          style={{
+            background: 'rgba(255,255,255,0.48)',
+            backdropFilter: 'blur(28px)',
+            WebkitBackdropFilter: 'blur(28px)',
+            border: '1px solid rgba(255,255,255,0.82)',
+            boxShadow: '0 8px 40px rgba(79,70,229,0.07), 0 2px 16px rgba(0,0,0,0.04)',
+          }}
+        >
+          <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.07) 0%, transparent 70%)' }} />
+
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
+            style={{ background: 'linear-gradient(135deg, #4F46E5, #00F2FE)', boxShadow: '0 0 32px rgba(0,242,254,0.3)' }}>
+            <Puzzle size={28} color="#fff" />
+          </div>
+
+          <div className="flex-1">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] mb-2" style={{ color: '#00F2FE' }}>A Medida</p>
+            <h3 className="font-grotesk font-bold text-2xl md:text-3xl text-graphite mb-3">
+              ¿Ningún agente encaja exactamente?
+            </h3>
+            <p className="font-inter text-base leading-relaxed" style={{ color: '#6E6E73' }}>
+              Diseñamos el impulso específico para tu necesidad. Contanos el problema — armamos la solución desde cero, con la misma infraestructura Plug & Play.
+            </p>
+          </div>
+
+          <CyanButton href="#contacto" className="shrink-0">
+            Diseñar mi agente <ArrowRight size={16} />
+          </CyanButton>
+        </motion.div>
+      </div>
+    </section>
   )
 }
 
@@ -674,8 +868,8 @@ export default function App() {
           </a>
 
           <div className="hidden md:flex items-center gap-8">
-            {['Servicios', 'Lab', 'Contacto'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`}
+            {['Servicios', 'Catálogo', 'Lab', 'Contacto'].map((item) => (
+              <a key={item} href={`#${item.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`}
                 className="font-inter text-sm font-medium transition-colors duration-200 hover:text-axcyan"
                 style={{ color: '#6E6E73' }}>
                 {item}
@@ -698,8 +892,8 @@ export default function App() {
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
             className="md:hidden mt-3 pt-4 pb-2 border-t flex flex-col gap-5"
             style={{ borderColor: 'rgba(0,0,0,0.06)' }}>
-            {['Servicios', 'Lab', 'Contacto'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`}
+            {['Servicios', 'Catálogo', 'Lab', 'Contacto'].map((item) => (
+              <a key={item} href={`#${item.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`}
                 className="font-inter text-sm" style={{ color: '#6E6E73' }}
                 onClick={() => setMobileOpen(false)}>{item}</a>
             ))}
@@ -726,7 +920,7 @@ export default function App() {
             style={{ background: 'rgba(0,242,254,0.07)', border: '1px solid rgba(0,242,254,0.2)', color: '#00F2FE' }}
           >
             <span className="badge-dot w-1.5 h-1.5 rounded-full" style={{ background: '#00F2FE' }} />
-            AxonLab: Donde la IA cobra impulso
+            Laboratorio de IA · Plug & Play
           </motion.div>
 
           {/* Headline — gradiente animado */}
@@ -737,9 +931,9 @@ export default function App() {
             className="font-grotesk font-bold leading-[1.04] tracking-tight mb-8"
             style={{ fontSize: 'clamp(2.8rem, 7vw, 5.5rem)' }}
           >
-            Transformamos la
+            IA para tu cotidianidad,
             <br />
-            <span className="animated-gradient-text">lógica en ejecución</span>
+            <span className="animated-gradient-text">sin complicaciones</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -750,8 +944,9 @@ export default function App() {
             className="font-inter text-lg md:text-xl max-w-2xl mx-auto mb-12"
             style={{ color: '#6E6E73', lineHeight: 1.78 }}
           >
-            Diseñamos agentes de IA, workflows automatizados y webs inteligentes
-            que convierten la complejidad en resultados concretos y medibles.
+            Como Netflix, pero para automatizar tu vida. Elegís el agente,
+            nosotros desplegamos y mantenemos todo — vos solo usás.
+            Sin servidores, sin código, sin fricción.
           </motion.p>
 
           {/* CTAs */}
@@ -778,7 +973,7 @@ export default function App() {
             transition={{ duration: 1, delay: 1 }}
             className="flex items-center justify-center gap-10 mt-20"
           >
-            {[{ value: '10×', label: 'más rápido' }, { value: '24/7', label: 'operación' }, { value: '100%', label: 'automatizado' }]
+            {[{ value: '5+', label: 'agentes listos' }, { value: '24/7', label: 'operación' }, { value: '0', label: 'servidores propios' }]
               .map(({ value, label }) => (
                 <div key={label} className="text-center">
                   <p className="font-grotesk font-bold text-2xl" style={{ color: '#1D1D1F' }}>{value}</p>
@@ -797,13 +992,13 @@ export default function App() {
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.75 }}>
-            <SectionLabel>Servicios</SectionLabel>
+            <SectionLabel>Cómo funciona</SectionLabel>
             <h2 className="font-grotesk font-bold leading-tight mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
-              Todo lo que necesitás,
-              <br /><span style={{ color: '#00F2FE' }}>en un solo estudio</span>
+              Simple como una
+              <br /><span style={{ color: '#00F2FE' }}>suscripción</span>
             </h2>
             <p className="font-inter text-base mb-16 max-w-md" style={{ color: '#6E6E73', lineHeight: 1.75 }}>
-              Tres servicios diseñados para transformar la manera en que tu negocio utiliza la inteligencia artificial.
+              No necesitás saber de servidores ni código. Nosotros desplegamos y mantenemos todo — vos pagás por tener tu vida automatizada sin fricción.
             </p>
           </motion.div>
 
@@ -812,6 +1007,12 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* ── CATÁLOGO ── */}
+      <CatalogSection />
+
+      {/* ── A MEDIDA ── */}
+      <AMedidaSection />
 
       {/* ── LAB ── */}
       <AxonFlowLab />
@@ -842,13 +1043,13 @@ export default function App() {
               <SectionLabel center>Contacto</SectionLabel>
               <h2 className="font-grotesk font-bold leading-tight mb-6 mt-4"
                 style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)' }}>
-                ¿Listo para el{' '}
+                Automatizá tu vida{' '}
                 <span style={{ backgroundImage: 'linear-gradient(135deg, #4F46E5, #00F2FE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                  impulso?
+                  hoy mismo
                 </span>
               </h2>
               <p className="font-inter text-base mb-10 max-w-md mx-auto" style={{ color: '#6E6E73', lineHeight: 1.78 }}>
-                Contanos tu proyecto. En 24 horas te mostramos exactamente cómo la IA puede transformarlo.
+                Elegís el agente, nosotros lo activamos. En 24 horas tu impulso está corriendo — sin que toques un servidor.
               </p>
               <CyanButton large href="mailto:hola@axonlab.cloud">
                 Iniciar conversación <ArrowRight size={17} />
@@ -869,8 +1070,8 @@ export default function App() {
             © 2025 AxonLab · Donde la IA cobra impulso
           </p>
           <nav className="flex gap-6">
-            {['Servicios', 'Lab', 'Contacto'].map((link) => (
-              <a key={link} href={`#${link.toLowerCase()}`}
+            {['Servicios', 'Catálogo', 'Lab', 'Contacto'].map((link) => (
+              <a key={link} href={`#${link.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`}
                 className="font-inter text-xs transition-colors hover:text-axcyan"
                 style={{ color: '#9393A0' }}>{link}</a>
             ))}
