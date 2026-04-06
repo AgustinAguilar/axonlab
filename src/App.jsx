@@ -5,7 +5,7 @@ import {
   ChevronRight, Menu, X, MessageCircle, Send, Sparkles,
   TrendingUp, Receipt, ShoppingBasket, Calendar, ShoppingCart,
   Check, Puzzle, Mic, CreditCard, Layers, Bell, BarChart2,
-  DollarSign, FileText, Users,
+  DollarSign, FileText, Users, ShieldCheck, FilePlus,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -278,11 +278,64 @@ const AGENTS = [
   },
   {
     name: 'Axon Fiscal',
-    tag: 'Facturación + ARCA',
+    tag: 'Finance · Plus',
     icon: Receipt,
     accent: '#00F2FE',
-    description: 'Todo lo de Finance más facturación electrónica automática ante ARCA. Ideal para autónomos y pequeños comercios que quieren cumplir sin perder tiempo.',
-    features: ['Facturación automática', 'Integración ARCA', 'Gestión de IVA y monotributo'],
+    description: 'La versión PLUS de Finance. Todo el control financiero más facturación electrónica ante ARCA con un solo mensaje — PDF listo para enviar al instante.',
+    features: ['Todo lo de Axon Finance', 'Factura con un mensaje', 'PDF ARCA al instante', 'Ideal para profesionales'],
+    detail: {
+      tagline: 'La versión PLUS de Axon Finance. Controlás tus finanzas y facturás ante ARCA desde el chat — sin entrar al portal, sin formularios, sin perder tiempo.',
+      highlights: [
+        {
+          icon: TrendingUp,
+          title: 'Todo lo de Axon Finance',
+          desc: 'Incluye el 100% de las funcionalidades de Finance: gastos, ingresos, cuotas, alertas de presupuesto, proyecciones, ahorro y préstamos.',
+        },
+        {
+          icon: ShieldCheck,
+          title: 'Configuración ARCA una sola vez',
+          desc: 'Conectamos tu CUIT, certificado digital y punto de venta. Desde ahí, el agente factura solo — vos no volvés a entrar al portal de ARCA.',
+        },
+        {
+          icon: FilePlus,
+          title: 'Factura con un mensaje',
+          desc: '"Alejo pagó $40.000, CUIT 20-12345678-9" → el agente genera la factura ante ARCA y te devuelve el PDF listo para reenviar al cliente.',
+        },
+        {
+          icon: Receipt,
+          title: 'Tipos de comprobante automáticos',
+          desc: 'Detecta si corresponde Factura A, B o C según el receptor. Consumidor final sin CUIT, empresa con CUIT, responsable inscripto — lo resuelve solo.',
+        },
+        {
+          icon: FileText,
+          title: 'PDF oficial al instante',
+          desc: 'El comprobante sale directo del sistema de ARCA con CAE y código QR. 100% válido, listo para enviar por WhatsApp o email.',
+        },
+        {
+          icon: BarChart2,
+          title: 'Ingreso registrado automáticamente',
+          desc: 'Cada factura emitida se registra como ingreso en el módulo Finance. El resumen mensual y las proyecciones siempre actualizados.',
+        },
+        {
+          icon: FileText,
+          title: 'Historial de comprobantes',
+          desc: 'Consultá todas las facturas emitidas, filtrá por cliente o mes, y regenerá cualquier PDF cuando lo necesitás.',
+        },
+        {
+          icon: Users,
+          title: 'Ideal para profesionales',
+          desc: 'Psicólogos, contadores, diseñadores, tutores, abogados — cualquier autónomo o monotributista que factura varios clientes por mes.',
+        },
+      ],
+      chat: [
+        { from: 'user', text: 'Alejo pagó $40.000, CUIT 20-12345678-9' },
+        { from: 'bot', text: '✓ Factura B generada\nN° 0001-00001234\nAlejo García · $40.000\nHonorarios profesionales\n📎 factura_alejo_garcia.pdf' },
+        { from: 'user', text: 'Mari también pagó $35.000, sin CUIT' },
+        { from: 'bot', text: '✓ Factura C · Consumidor Final\nN° 0001-00001235 · $35.000\n📎 factura_mari.pdf' },
+        { from: 'user', text: '¿Cuánto facturé este mes?' },
+        { from: 'bot', text: '📊 Mayo 2025\n12 facturas emitidas\nTotal: $340.000\n💰 Registrado en Finance ✓' },
+      ],
+    },
   },
   {
     name: 'Axon Pantry',
