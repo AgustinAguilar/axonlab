@@ -7,6 +7,7 @@ import {
   Check, Puzzle, Mic, CreditCard, Layers, Bell, BarChart2,
   DollarSign, FileText, Users, ShieldCheck, FilePlus,
   Camera, ChefHat, Clock, Link2, CalendarCheck, UserPlus,
+  Store, MapPin, Truck, Package,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -465,8 +466,61 @@ const AGENTS = [
     tag: 'Ventas y Pedidos',
     icon: ShoppingCart,
     accent: '#4F46E5',
-    description: 'Bot de ventas para comercios. Recibe pedidos, consulta stock en tiempo real, calcula totales y coordina la entrega — sin que toques el teléfono.',
-    features: ['Toma de pedidos automática', 'Consulta de stock en vivo', 'Coordinación de entrega'],
+    description: 'Tu vendedor 24/7. Recibe pedidos por WhatsApp o Telegram, muestra el menú, verifica stock, calcula el total y coordina la entrega — sin que toques el teléfono.',
+    features: ['Pedidos por WhatsApp/Telegram', 'Menú y stock en tiempo real', 'Coordinación de entrega', 'Notificación instantánea al comercio'],
+    detail: {
+      tagline: 'Tu local nunca cierra. El bot atiende, toma pedidos, cobra y coordina entregas — las 24 horas, aunque vos estés durmiendo.',
+      highlights: [
+        {
+          icon: Store,
+          title: 'Catálogo interactivo',
+          desc: '"¿Qué tienen?" → el bot muestra el menú con precios actualizados. El cliente elige, pregunta y pide — todo en la misma conversación.',
+        },
+        {
+          icon: ShoppingCart,
+          title: 'Toma de pedidos automática',
+          desc: '"Quiero 2 hamburguesas y una coca" → el bot arma el pedido, suma el total y pide confirmación. Sin errores, sin idas y vueltas.',
+        },
+        {
+          icon: Package,
+          title: 'Stock en tiempo real',
+          desc: 'Antes de confirmar un pedido, verifica que haya stock. Si algo se agotó, lo informa y ofrece alternativas. Cero pedidos frustrados.',
+        },
+        {
+          icon: MapPin,
+          title: 'Coordinación de entrega',
+          desc: 'Pide la dirección, valida si está dentro de la zona de cobertura y da el tiempo estimado de entrega. El cliente sabe exactamente cuándo llega.',
+        },
+        {
+          icon: CreditCard,
+          title: 'Métodos de pago integrados',
+          desc: 'Efectivo, transferencia o Mercado Pago — el bot informa cómo pagar y confirma la recepción del pago antes de enviar el pedido.',
+        },
+        {
+          icon: Bell,
+          title: 'Alerta instantánea al comercio',
+          desc: 'Cada pedido nuevo te llega como notificación con todos los detalles. Vos solo cocinás/preparás — el resto lo maneja el agente.',
+        },
+        {
+          icon: Truck,
+          title: 'Estado del pedido en vivo',
+          desc: '"¿Cómo va mi pedido?" → el cliente consulta en cualquier momento. Vos actualizás el estado con un mensaje y el bot lo comunica solo.',
+        },
+        {
+          icon: BarChart2,
+          title: 'Resumen del día y métricas',
+          desc: '¿Cuánto vendí hoy? ¿Cuál fue el producto más pedido? El agente te da un resumen diario con ventas, pedidos y productos estrella.',
+        },
+      ],
+      chat: [
+        { from: 'user', text: 'Buenas, ¿tienen empanadas?' },
+        { from: 'bot', text: '🫓 Sí! Hoy tenemos:\n• Carne x12 — $3.600\n• Pollo x12 — $3.200\n• Humita x12 — $2.800\n¿Cuántas querés?' },
+        { from: 'user', text: 'Una de carne y una de pollo' },
+        { from: 'bot', text: '✓ Pedido\n• Empanadas carne x12 — $3.600\n• Empanadas pollo x12 — $3.200\nTotal: $6.800\n📍 ¿A qué dirección enviamos?' },
+        { from: 'user', text: 'Mitre 450' },
+        { from: 'bot', text: '✅ Confirmado\n📍 Mitre 450 · dentro de zona\n⏱ Entrega: 35-45 min\n💳 Efectivo o Mercado Pago\n¡Ya lo estamos preparando!' },
+      ],
+    },
   },
 ]
 
