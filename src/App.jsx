@@ -1063,17 +1063,11 @@ const AxonFlowLab = () => {
 // ─────────────────────────────────────────────────────────────────────────────
 // AxonBot — FAB + Modal de chat
 // ─────────────────────────────────────────────────────────────────────────────
-const BOT_RESPONSES = [
-  'Podemos automatizarlo con n8n + Claude. ¿Cuándo querés empezar?',
-  'Un agente de IA puede resolver eso en minutos. Contame más.',
-  '¡Perfecto caso de uso! Te armo una propuesta rápida.',
-  'Eso lo conectamos con n8n en un par de nodos. Muy viable.',
-  'Combinando Claude con tu stack actual, lo tenemos en días.',
-]
+const AXONBOT_WEBHOOK = import.meta.env.VITE_AXONBOT_WEBHOOK
 
 const AxonBotModal = ({ onClose }) => {
   const [messages, setMessages] = useState([
-    { from: 'bot', text: '¡Hola! Soy AxonBot. ¿En qué proyecto puedo ayudarte hoy?' },
+    { from: 'bot', text: '¡Hola! Soy AxonBot. Contame qué querés automatizar y te cuento cómo podemos ayudarte.' },
   ])
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
@@ -1085,25 +1079,49 @@ const AxonBotModal = ({ onClose }) => {
     }
   }, [messages, typing])
 
-  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
   }, [])
 
-  const handleSend = useCallback(() => {
+  const handleSend = useCallback(async () => {
     const text = input.trim()
-    if (!text) return
-    setMessages(prev => [...prev, { from: 'user', text }])
+    if (!text || typing) return
+
+    const userMsg = { from: 'user', text }
+    setMessages(prev => [...prev, userMsg])
     setInput('')
     setTyping(true)
 
-    setTimeout(() => {
-      setTyping(false)
-      const reply = BOT_RESPONSES[Math.floor(Math.random() * BOT_RESPONSES.length)]
+    try {
+      if (!AXONBOT_WEBHOOK) throw new Error('no webhook configured')
+
+      const history = [...messages, userMsg].map(m => ({
+        role: m.from === 'user' ? 'user' : 'assistant',
+        content: m.text,
+      }))
+
+      const res = await fetch(AXONBOT_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, history }),
+      })
+
+      if (!res.ok) throw new Error(`status ${res.status}`)
+      const data = await res.json()
+      const reply = data.response ?? data.output ?? data.text
+        ?? 'No pude procesar eso. Escribinos a hola@axonlab.cloud 🙌'
+
       setMessages(prev => [...prev, { from: 'bot', text: reply }])
-    }, 950)
-  }, [input])
+    } catch {
+      setMessages(prev => [...prev, {
+        from: 'bot',
+        text: 'Hubo un problema de conexión. Escribinos directamente a hola@axonlab.cloud 🙌',
+      }])
+    } finally {
+      setTyping(false)
+    }
+  }, [input, messages, typing])
 
   const handleKey = useCallback((e) => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() }
