@@ -6,7 +6,7 @@ import {
   TrendingUp, Receipt, ShoppingBasket, Calendar, ShoppingCart,
   Check, Puzzle, Mic, CreditCard, Layers, Bell, BarChart2,
   DollarSign, FileText, Users, ShieldCheck, FilePlus,
-  Camera, ChefHat, Clock,
+  Camera, ChefHat, Clock, Link2, CalendarCheck, UserPlus,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -400,12 +400,65 @@ const AGENTS = [
     },
   },
   {
-    name: 'Axon Agenda',
-    tag: 'Turnos Inteligentes',
+    name: 'Axon PA',
+    tag: 'Asistente Personal',
     icon: Calendar,
     accent: '#00F2FE',
-    description: 'Gestioná turnos y reservas desde WhatsApp o Telegram, con o sin Calendly. Confirmaciones, recordatorios y cancelaciones — completamente automáticas.',
-    features: ['Reservas por chat', 'Integración Calendly', 'Recordatorios automáticos'],
+    description: 'Tu asistente personal de agenda. Hablale como a una persona, compartí tu disponibilidad para que otros se agenden solos, y nunca más pierdas un turno.',
+    features: ['Registro por chat natural', 'Link de auto-agendamiento', 'Recordatorios automáticos', 'Consultas en lenguaje natural'],
+    detail: {
+      tagline: 'Tu asistente personal de agenda. Lo manejás hablándole como a una persona — y cuando querés que alguien se agende solo, compartís un link.',
+      highlights: [
+        {
+          icon: MessageCircle,
+          title: 'Registro por chat natural',
+          desc: '"Lunes 20Hs veo a Lucas", "El martes tengo reunión con el equipo a las 10" — Axon PA entiende, registra y confirma. Sin formularios.',
+        },
+        {
+          icon: Link2,
+          title: 'Link de auto-agendamiento',
+          desc: 'Compartís tu link de disponibilidad y el otro elige el horario que le viene. Vos no intervenís — el turno aparece solo en tu agenda.',
+        },
+        {
+          icon: CalendarCheck,
+          title: 'Consultas en lenguaje natural',
+          desc: '"¿Estoy libre el jueves a las 15?", "¿Cuándo es lo de Lucas?", "Mostrá mi semana" — respuestas al instante, sin abrir ninguna app.',
+        },
+        {
+          icon: Bell,
+          title: 'Recordatorios automáticos',
+          desc: 'Te avisa antes de cada evento y también le avisa a quien agendaste — por WhatsApp o Telegram. Nadie se olvida, nadie llega tarde.',
+        },
+        {
+          icon: UserPlus,
+          title: 'Confirmación y cancelación',
+          desc: '"Lucas canceló el lunes" → el slot queda libre de inmediato. Reagendá con un mensaje. El agente actualiza todo sin que muevas un dedo.',
+        },
+        {
+          icon: Clock,
+          title: 'Duraciones y bloques a medida',
+          desc: 'Configurás cuánto dura cada tipo de turno. "El miércoles no trabajo" bloquea tu disponibilidad automáticamente en el link.',
+        },
+        {
+          icon: Calendar,
+          title: 'Vista semanal completa',
+          desc: '"Mostrá mi semana" y ves todos los eventos ordenados por día y hora. Identificás huecos y solapamientos al instante.',
+        },
+        {
+          icon: Zap,
+          title: 'Integración con Calendly',
+          desc: '¿Ya usás Calendly? Lo sincronizamos. O lo reemplazamos con el link propio de Axon PA — vos elegís cómo querés que funcione.',
+        },
+      ],
+      chat: [
+        { from: 'user', text: 'Lunes 20Hs veo a Lucas' },
+        { from: 'bot', text: '✓ Agendado\nLunes 14/4 · 20:00 — Lucas\n🔔 Te aviso a las 19:30\n¿Le mando recordatorio a él también?' },
+        { from: 'user', text: 'Sí, y pasame el link para que se agenden solos' },
+        { from: 'bot', text: '📨 Recordatorio enviado a Lucas ✓\n\n🔗 Tu link de turnos:\naxonpa.link/tuNombre\nCompartilo y eligen el horario solos' },
+        { from: 'user', text: '¿Estoy libre el jueves a las 15?' },
+        { from: 'bot', text: '🟢 Jueves 17/4 · 15:00 — libre\nTu próximo evento es a las 18:00\n¿Lo agendamos?' },
+      ],
+    },
   },
   {
     name: 'Axon Delivery',
