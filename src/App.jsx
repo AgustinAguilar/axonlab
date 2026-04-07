@@ -350,8 +350,8 @@ const AGENTS = [
       highlights: [
         {
           icon: Camera,
-          title: 'Foto o voz para registrar',
-          desc: 'Sacá foto a lo que compraste o mandá un audio: "compramos 2kg de pollo y 6 huevos" — el agente detecta, categoriza y actualiza el stock.',
+          title: 'Foto del ticket o voz',
+          desc: 'Sacá foto al ticket del super o mandá un audio: "compramos 2kg de pollo y 6 huevos" — el agente lee, categoriza y actualiza el stock.',
         },
         {
           icon: ShoppingBasket,
@@ -390,8 +390,8 @@ const AGENTS = [
         },
       ],
       chat: [
-        { from: 'user', text: '📷 [foto de la bolsa del super]' },
-        { from: 'bot', text: '✓ Detecté 9 productos\nAgregados al stock:\n• Pollo 2kg · freezer\n• Huevos x6 · heladera\n• Fideos 500g · almacén\n+ 6 más ✓' },
+        { from: 'user', text: '📷 [foto del ticket del super]' },
+        { from: 'bot', text: '✓ Leí el ticket — 9 productos\n• Pollo 2kg · freezer\n• Huevos x6 · heladera\n• Fideos 500g · almacén\n+ 6 más agregados al stock ✓' },
         { from: 'user', text: '¿Qué puedo cocinar hoy?' },
         { from: 'bot', text: '✅ Podés hacer ahora:\n• Milanesas con ensalada\n• Tuco con fideos\n\n⚡ Casi listo (falta 1 cosa):\n• Curry de pollo → falta: caldo de verduras' },
         { from: 'user', text: 'Hacemos el tuco, generá la lista del super' },
