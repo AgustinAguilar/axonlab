@@ -6,6 +6,7 @@ import {
   TrendingUp, Receipt, ShoppingBasket, Calendar, ShoppingCart,
   Check, Puzzle, Mic, CreditCard, Layers, Bell, BarChart2,
   DollarSign, FileText, Users, ShieldCheck, FilePlus,
+  Camera, ChefHat, Clock,
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -339,11 +340,64 @@ const AGENTS = [
   },
   {
     name: 'Axon Pantry',
-    tag: 'Stock del Hogar',
+    tag: 'Despensa Inteligente',
     icon: ShoppingBasket,
     accent: '#4F46E5',
-    description: 'Controlá tu despensa con fotos o mensajes de voz. El agente detecta qué falta, genera la lista de compras y te recuerda antes de ir al super.',
-    features: ['Control por foto o voz', 'Lista de compras inteligente', 'Alertas de stock bajo'],
+    description: 'Controlá tu despensa con fotos o voz. Sabe qué tenés, qué falta, qué podés cocinar y genera la lista del super sola — antes de que te des cuenta.',
+    features: ['Foto o voz para registrar', '¿Qué puedo cocinar hoy?', 'Lista automática del super', 'Alertas de vencimiento'],
+    detail: {
+      tagline: 'Tu despensa tiene memoria. Sabés en todo momento qué tenés, qué falta y qué podés cocinar — sin revisar heladeras ni hacer listas a mano.',
+      highlights: [
+        {
+          icon: Camera,
+          title: 'Foto o voz para registrar',
+          desc: 'Sacá foto a lo que compraste o mandá un audio: "compramos 2kg de pollo y 6 huevos" — el agente detecta, categoriza y actualiza el stock.',
+        },
+        {
+          icon: ShoppingBasket,
+          title: 'Stock organizado por zona',
+          desc: 'Heladera, freezer, almacén, verdulería — cada ítem en su lugar con cantidad, unidad y mínimo configurado. Siempre actualizado.',
+        },
+        {
+          icon: Bell,
+          title: 'Alertas de stock bajo',
+          desc: 'Definís un mínimo por ítem y el agente te avisa cuando estás por quedarte sin algo. Sin sorpresas antes de cocinar.',
+        },
+        {
+          icon: Clock,
+          title: 'Control de vencimientos',
+          desc: 'Registrá fechas de vencimiento y el agente te avisa con anticipación. Menos desperdicio, más aprovechamiento de lo que ya tenés.',
+        },
+        {
+          icon: ChefHat,
+          title: '¿Qué puedo cocinar hoy?',
+          desc: 'El agente cruza tu stock con las recetas guardadas y te dice qué podés hacer ahora mismo — y qué te falta para lo que casi tenés listo.',
+        },
+        {
+          icon: Zap,
+          title: 'Cocinar descuenta el stock',
+          desc: 'Elegís una receta y el agente descuenta los ingredientes automáticamente. Tu inventario siempre refleja la realidad.',
+        },
+        {
+          icon: Calendar,
+          title: 'Planificación de menú semanal',
+          desc: 'Planificás qué van a comer cada día y el agente calcula exactamente qué ingredientes necesitás comprar según lo que ya tenés.',
+        },
+        {
+          icon: ShoppingCart,
+          title: 'Lista del super automática',
+          desc: 'Combina los ítems bajo mínimo con los ingredientes del menú semanal y genera una lista lista para llevar al super — sin pensar.',
+        },
+      ],
+      chat: [
+        { from: 'user', text: '📷 [foto de la bolsa del super]' },
+        { from: 'bot', text: '✓ Detecté 9 productos\nAgregados al stock:\n• Pollo 2kg · freezer\n• Huevos x6 · heladera\n• Fideos 500g · almacén\n+ 6 más ✓' },
+        { from: 'user', text: '¿Qué puedo cocinar hoy?' },
+        { from: 'bot', text: '✅ Podés hacer ahora:\n• Milanesas con ensalada\n• Tuco con fideos\n\n⚡ Casi listo (falta 1 cosa):\n• Curry de pollo → falta: caldo de verduras' },
+        { from: 'user', text: 'Hacemos el tuco, generá la lista del super' },
+        { from: 'bot', text: '🍝 Stock actualizado\nTomate, carne, cebolla descontados\n\n🛒 Lista del super (8 ítems)\nCrítico: leche, aceite\nMenú: caldo, zucchini, crema\n📋 Lista lista para llevar' },
+      ],
+    },
   },
   {
     name: 'Axon Agenda',
