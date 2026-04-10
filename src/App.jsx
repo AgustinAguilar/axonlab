@@ -1518,12 +1518,17 @@ export default function App() {
           <p className="font-mono text-xs" style={{ color: '#9393A0' }}>
             © 2025 AxonLab · Donde la IA cobra impulso
           </p>
-          <nav className="flex gap-6">
+          <nav className="flex gap-6 flex-wrap justify-center">
             {['Servicios', 'Catálogo', 'Lab', 'Contacto'].map((link) => (
               <a key={link} href={`#${link.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`}
                 className="font-inter text-xs transition-colors hover:text-axcyan"
                 style={{ color: '#9393A0' }}>{link}</a>
             ))}
+            <a href="/privacidad"
+              className="font-inter text-xs transition-colors hover:text-axcyan"
+              style={{ color: '#9393A0' }}>
+              Privacidad
+            </a>
           </nav>
         </div>
       </footer>
