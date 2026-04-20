@@ -67,7 +67,7 @@ export default function Privacidad() {
               Política de Privacidad
             </h1>
             <p className="font-inter text-base" style={{ color: '#9393A0' }}>
-              Última actualización: 9 de abril de 2025 · Vigente desde: 9 de abril de 2025
+              Última actualización: 20 de abril de 2026 · Vigente desde: 9 de abril de 2025
             </p>
           </div>
 
@@ -201,7 +201,60 @@ export default function Privacidad() {
             </ul>
           </Section>
 
-          <Section title="8. Transferencias internacionales de datos">
+          <Section title="8. Datos de usuarios de Google (Axon Finance)">
+            <p>
+              <strong>Axon Finance</strong> es un producto de AxonLab que funciona como asistente financiero
+              por WhatsApp y guarda la información del usuario en una planilla de Google Sheets dentro de
+              su propio Google Drive.
+            </p>
+
+            <p><strong>8.1 Scopes de Google solicitados</strong></p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>openid, email</strong> — para identificar al usuario y asociarlo a su cuenta de WhatsApp.</li>
+              <li>
+                <strong>https://www.googleapis.com/auth/drive.file</strong> — acceso restringido únicamente
+                a los archivos que Axon Finance crea en el Drive del usuario. No tenemos acceso al resto
+                de su Drive.
+              </li>
+            </ul>
+
+            <p><strong>8.2 Uso de los datos</strong></p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Crear y mantener la planilla personal del usuario con sus gastos, ingresos, tarjetas, ahorros y préstamos.</li>
+              <li>Leer y escribir en esa planilla cuando el usuario envía mensajes por WhatsApp (ej: registrar un gasto, consultar el resumen).</li>
+            </ul>
+
+            <p><strong>8.3 Lo que NO hacemos</strong></p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>No vendemos, alquilamos ni compartimos datos de Google con terceros.</li>
+              <li>No usamos datos de Google (contenido de Sheets/Drive) para entrenar modelos de IA propios ni de terceros.</li>
+              <li>No accedemos a archivos del Drive que no hayan sido creados por Axon Finance.</li>
+              <li>No usamos los datos de Google para publicidad.</li>
+            </ul>
+
+            <p><strong>8.4 Retención y eliminación</strong></p>
+            <p>
+              El usuario puede revocar el acceso en cualquier momento desde{' '}
+              <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer"
+                className="text-axcyan hover:underline">https://myaccount.google.com/permissions</a>.
+              Al revocar, Axon Finance deja de leer/escribir en la planilla. La planilla permanece en el
+              Drive del usuario (es suya). Para eliminar los datos que guardamos asociados a su cuenta
+              (tokens, configuración), puede escribir a{' '}
+              <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>.
+            </p>
+
+            <p><strong>8.5 Cumplimiento</strong></p>
+            <p>
+              El uso y transferencia de información recibida de las APIs de Google por parte de Axon Finance
+              cumple con la{' '}
+              <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank"
+                rel="noopener noreferrer" className="text-axcyan hover:underline">
+                Google API Services User Data Policy
+              </a>, incluyendo los requisitos de Limited Use.
+            </p>
+          </Section>
+
+          <Section title="9. Transferencias internacionales de datos">
             <p>
               Algunos de nuestros proveedores de servicios pueden estar ubicados en países distintos al tuyo. En estos
               casos, garantizamos que dicha transferencia se realiza conforme a la normativa aplicable, utilizando
@@ -210,7 +263,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="9. Retención de datos">
+          <Section title="10. Retención de datos">
             <p>Conservamos tu información personal durante el tiempo estrictamente necesario para cumplir con las finalidades descritas en esta política:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Datos de clientes activos:</strong> Mientras dure la relación contractual y por un período adicional de hasta 5 años para cumplir obligaciones legales y fiscales.</li>
@@ -224,7 +277,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="10. Seguridad de la información">
+          <Section title="11. Seguridad de la información">
             <p>
               Implementamos medidas técnicas y organizativas apropiadas para proteger tu información personal contra
               accesos no autorizados, pérdida, alteración o destrucción:
@@ -242,7 +295,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="11. Tus derechos">
+          <Section title="12. Tus derechos">
             <p>De acuerdo con la normativa de protección de datos aplicable, tenés los siguientes derechos sobre tus datos personales:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Acceso:</strong> Obtener confirmación sobre si tratamos tus datos y recibir una copia de los mismos.</li>
@@ -260,7 +313,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="12. Cookies y tecnologías similares">
+          <Section title="13. Cookies y tecnologías similares">
             <p>
               Nuestro sitio web puede utilizar cookies y tecnologías similares para mejorar la experiencia de navegación
               y analizar el tráfico del sitio.
@@ -277,7 +330,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="13. Menores de edad">
+          <Section title="14. Menores de edad">
             <p>
               Nuestros servicios están dirigidos a personas mayores de 18 años. No recopilamos intencionalmente
               datos personales de menores de edad. Si tenés conocimiento de que un menor nos ha proporcionado
@@ -287,7 +340,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="14. Enlaces a terceros">
+          <Section title="15. Enlaces a terceros">
             <p>
               Nuestro sitio puede contener enlaces a sitios web de terceros. Esta Política de Privacidad no aplica
               a dichos sitios. Te recomendamos revisar las políticas de privacidad de cada sitio que visités.
@@ -295,7 +348,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="15. Cambios en esta política">
+          <Section title="16. Cambios en esta política">
             <p>
               Podemos actualizar esta Política de Privacidad periódicamente para reflejar cambios en nuestros
               servicios, tecnologías o marcos legales aplicables. La versión actualizada estará siempre disponible
@@ -307,7 +360,7 @@ export default function Privacidad() {
             </p>
           </Section>
 
-          <Section title="16. Contacto">
+          <Section title="17. Contacto">
             <p>Si tenés preguntas, comentarios o inquietudes sobre esta Política de Privacidad o sobre el tratamiento de tus datos personales, no dudes en contactarnos:</p>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Correo electrónico:</strong>{' '}

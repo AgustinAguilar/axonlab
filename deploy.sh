@@ -122,9 +122,9 @@ server {
     root \$APP_DIR/dist;
     index index.html;
 
-    # SPA fallback
+    # SPA + multi-page fallback (.html extension support)
     location / {
-        try_files \\\$uri \\\$uri/ /index.html;
+        try_files \\\$uri \\\$uri.html \\\$uri/ /index.html;
     }
 
     # Cache para assets estáticos
@@ -184,7 +184,11 @@ if [ "\$FRESH" = "true" ]; then
   setup_ssl
   setup_firewall
 else
-  # En actualización solo recargar Nginx para reflejar nuevo build
+  # En actualización: parchar try_files para soportar páginas .html (ej: /privacidad)
+  if grep -q 'try_files \$uri \$uri/ /index.html' /etc/nginx/sites-available/axonlab 2>/dev/null; then
+    sed -i 's|try_files \$uri \$uri/ /index.html;|try_files \$uri \$uri.html \$uri/ /index.html;|' /etc/nginx/sites-available/axonlab
+    warn "Nginx: try_files actualizado para soportar rutas multi-page."
+  fi
   nginx -t && systemctl reload nginx
   log "Nginx recargado."
 fi

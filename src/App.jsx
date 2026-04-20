@@ -1529,6 +1529,11 @@ export default function App() {
               style={{ color: '#9393A0' }}>
               Privacidad
             </a>
+            <a href="/terminos"
+              className="font-inter text-xs transition-colors hover:text-axcyan"
+              style={{ color: '#9393A0' }}>
+              Términos
+            </a>
           </nav>
         </div>
       </footer>
