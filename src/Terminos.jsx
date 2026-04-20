@@ -125,7 +125,7 @@ export default function Terminos() {
             <p>
               El usuario es el único responsable de mantener la confidencialidad de sus credenciales
               de Google y WhatsApp, así como de toda actividad realizada a través de su cuenta.
-              Debe notificar de inmediato a <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>{' '}
+              Debe notificar de inmediato a <a href="mailto:info@axonlab.cloud" className="text-axcyan hover:underline">info@axonlab.cloud</a>{' '}
               ante cualquier uso no autorizado.
             </p>
           </Section>
@@ -198,7 +198,7 @@ export default function Terminos() {
               </li>
               <li>Dejar de enviar mensajes al número de WhatsApp del Servicio.</li>
               <li>Solicitar la eliminación de sus datos escribiendo a{' '}
-                <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>.
+                <a href="mailto:info@axonlab.cloud" className="text-axcyan hover:underline">info@axonlab.cloud</a>.
               </li>
             </ul>
             <p>
@@ -253,7 +253,7 @@ export default function Terminos() {
             <p>Ante cualquier consulta sobre estos Términos de Servicio:</p>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Correo electrónico:</strong>{' '}
-                <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>
+                <a href="mailto:info@axonlab.cloud" className="text-axcyan hover:underline">info@axonlab.cloud</a>
               </li>
               <li><strong>Sitio web:</strong>{' '}
                 <a href="https://axonlab.cloud" className="text-axcyan hover:underline">axonlab.cloud</a>

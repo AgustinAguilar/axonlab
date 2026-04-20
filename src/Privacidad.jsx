@@ -93,7 +93,7 @@ export default function Privacidad() {
             </p>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Nombre comercial:</strong> AxonLab</li>
-              <li><strong>Correo electrónico de contacto:</strong> hola@axonlab.cloud</li>
+              <li><strong>Correo electrónico de contacto:</strong> info@axonlab.cloud</li>
               <li><strong>Sitio web:</strong> https://axonlab.cloud</li>
             </ul>
             <p>
@@ -240,7 +240,7 @@ export default function Privacidad() {
               Al revocar, Axon Finance deja de leer/escribir en la planilla. La planilla permanece en el
               Drive del usuario (es suya). Para eliminar los datos que guardamos asociados a su cuenta
               (tokens, configuración), puede escribir a{' '}
-              <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>.
+              <a href="mailto:info@axonlab.cloud" className="text-axcyan hover:underline">info@axonlab.cloud</a>.
             </p>
 
             <p><strong>8.5 Cumplimiento</strong></p>
@@ -308,7 +308,7 @@ export default function Privacidad() {
             </ul>
             <p>
               Para ejercer cualquiera de estos derechos, podés enviarnos un correo a{' '}
-              <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>{' '}
+              <a href="mailto:info@axonlab.cloud" className="text-axcyan hover:underline">info@axonlab.cloud</a>{' '}
               indicando tu solicitud. Responderemos dentro de los plazos legalmente establecidos.
             </p>
           </Section>
@@ -335,7 +335,7 @@ export default function Privacidad() {
               Nuestros servicios están dirigidos a personas mayores de 18 años. No recopilamos intencionalmente
               datos personales de menores de edad. Si tenés conocimiento de que un menor nos ha proporcionado
               información personal, te pedimos que nos lo comuniques a{' '}
-              <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>{' '}
+              <a href="mailto:info@axonlab.cloud" className="text-axcyan hover:underline">info@axonlab.cloud</a>{' '}
               para proceder a su eliminación de inmediato.
             </p>
           </Section>
@@ -364,7 +364,7 @@ export default function Privacidad() {
             <p>Si tenés preguntas, comentarios o inquietudes sobre esta Política de Privacidad o sobre el tratamiento de tus datos personales, no dudes en contactarnos:</p>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Correo electrónico:</strong>{' '}
-                <a href="mailto:hola@axonlab.cloud" className="text-axcyan hover:underline">hola@axonlab.cloud</a>
+                <a href="mailto:info@axonlab.cloud" className="text-axcyan hover:underline">info@axonlab.cloud</a>
               </li>
               <li><strong>Sitio web:</strong>{' '}
                 <a href="https://axonlab.cloud" className="text-axcyan hover:underline">axonlab.cloud</a>

@@ -735,7 +735,7 @@ const AgentModal = ({ agent, onClose }) => {
           <p className="font-inter text-sm text-center sm:text-left" style={{ color: '#9393A0' }}>
             Suscripción mensual · Desplegado y mantenido por AxonLab
           </p>
-          <CyanButton href="mailto:hola@axonlab.cloud">
+          <CyanButton href="mailto:info@axonlab.cloud">
             Quiero este agente <ArrowRight size={15} />
           </CyanButton>
         </div>
@@ -1110,13 +1110,13 @@ const AxonBotModal = ({ onClose }) => {
       if (!res.ok) throw new Error(`status ${res.status}`)
       const data = await res.json()
       const reply = data.response ?? data.output ?? data.text
-        ?? 'No pude procesar eso. Escribinos a hola@axonlab.cloud 🙌'
+        ?? 'No pude procesar eso. Escribinos a info@axonlab.cloud 🙌'
 
       setMessages(prev => [...prev, { from: 'bot', text: reply }])
     } catch {
       setMessages(prev => [...prev, {
         from: 'bot',
-        text: 'Hubo un problema de conexión. Escribinos directamente a hola@axonlab.cloud 🙌',
+        text: 'Hubo un problema de conexión. Escribinos directamente a info@axonlab.cloud 🙌',
       }])
     } finally {
       setTyping(false)
@@ -1500,7 +1500,7 @@ export default function App() {
               <p className="font-inter text-base mb-10 max-w-md mx-auto" style={{ color: '#6E6E73', lineHeight: 1.78 }}>
                 Elegís el agente, nosotros lo activamos. En 24 horas tu impulso está corriendo — sin que toques un servidor.
               </p>
-              <CyanButton large href="mailto:hola@axonlab.cloud">
+              <CyanButton large href="mailto:info@axonlab.cloud">
                 Iniciar conversación <ArrowRight size={17} />
               </CyanButton>
             </div>
